@@ -1,0 +1,35 @@
+INTRODUCTION
+
+The AWE API is a PHP language based Application Programming Interface (API) that allows developers to build custom web and mobile-based administrative applications while communicating with the AWE servers.
+
+The AWE API is ideal for customers who want to build custom administrative interfaces.
+
+This is a beta release.  Once we've had enough testing and usage we'll update this to a full version 1.
+
+USAGE
+
+Before start using it you'll need an API KEY, you can get one here
+
+http://developer.dealercloud.com/api/register.php
+
+The API KEY allows you to run in developer mode and test your application, once you're ready to run on production mode you need to send an email to blake@autowebengine.com and ask for a production key. At the moment the production keys are manually processed and approved one by one.
+
+If you need a developer broker account you also need to send an email and ask for one, as all the developer api keys are dealers accounts.
+
+CONFIGURATION
+
+If you want to run the examples you need to change the API KEY in the config.php file.
+
+The Client php object requires an API KEY to operate on the methods, except on user login.
+
+TESTING
+
+You can test the API methods on the developer center, here
+
+http://developer.dealercloud.com/api/test.php 
+
+Using your API KEY you can test all the available api methods, and in the package you can find examples for each method as well.
+
+BUGS
+
+This is a beta release, if you find any bugs or something not working as expected please send an email to blake@autowebengine.com and we'll fix it in the short term.
