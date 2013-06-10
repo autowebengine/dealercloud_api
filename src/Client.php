@@ -365,26 +365,34 @@ class Client
 			foreach($this->data->vehicles[0]->vehicle as $veh) {
 				$vehicle = array();
 				$vehicle["photos"] = array();
-				$vehicle["thumbs"] = array();
 				$vehicle["dealer"] = array();
+				$vehicle["thumbs"] = array();
 				foreach($veh as $key=>$val) {
 					$key = (string)$key;
-					if($key != "dealer" && $key != "photos" && $key != "thumbs") {
+					if($key != "dealer" && $key != "photos" && $key != "videos" && $key != "thumbs") {
 						$vehicle[$key] = (string)$val;
 					}
 				}
-				foreach($veh->photos[0] as $key=>$val) {
+				foreach($veh->photos[0] as $key=>$val)
 					$vehicle["photos"][] = (string)$val;
-				}
 
-				foreach($veh->thumbs[0] as $key=>$val) {
-					$vehicle["thumbs"][] = (string)$val;
-				}
-
-				foreach($veh->dealer[0] as $key=>$val) {
+				foreach($veh->dealer[0] as $key=>$val)
 					$vehicle["dealer"][(string)$key] = (string)$val;
+
+				foreach($veh->thumbs[0] as $key=>$val)
+					$vehicle["thumbs"][] = (string)$val;
+
+				$videos = array();
+				foreach($veh->videos[0]->video as $video) {
+					$vid = array();
+					foreach($video as $key=>$val) {
+						$key = (string)$key;
+						$vid[$key] = (string)$val;
+					}
+					$videos[] = $vid;
 				}
-	
+				$vehicle["videos"] = $videos;
+
 				$vehicles["list"][] = $vehicle;
 			}
 	
@@ -447,26 +455,33 @@ class Client
 		$vehicle = array();
 		if (!$this->hasError)
 		{
-			foreach($this->data->vehicle[0] as $key=>$val) {
+			foreach($this->data->vehicle[0] as $key=>$val)
 				$vehicle[(string)$key] = (string)$val;
-			}
-	
-			foreach($this->data->vehicle[0]->dealer[0] as $key=>$val) {
+
+			foreach($this->data->vehicle[0]->dealer[0] as $key=>$val)
 				$vehicle["dealer"][(string)$key] = (string)$val;
-			}
-	
-			foreach($this->data->vehicle[0]->carfax[0] as $key=>$val) {
+
+			foreach($this->data->vehicle[0]->carfax[0] as $key=>$val)
 				$vehicle["carfax"][(string)$key] = (string)$val;
-			}
-	
+
 			$count = 0;
-			foreach($this->data->vehicle[0]->photos[0] as $key=>$val) {
+			foreach($this->data->vehicle[0]->photos[0] as $key=>$val)
 				$vehicle["photos"][$count++] = (string)$val;
-			}
+
 			$count = 0;
-			foreach($this->data->vehicle[0]->thumbs[0] as $key=>$val) {
+			foreach($this->data->vehicle[0]->thumbs[0] as $key=>$val)
 				$vehicle["thumbs"][$count++] = (string)$val;
+
+			$videos = array();
+			foreach($this->data->vehicle[0]->videos[0]->video as $video) {
+				$vid = array();
+				foreach($video as $key=>$val) {
+					$key = (string)$key;
+					$vid[$key] = (string)$val;
+				}
+				$videos[] = $vid;
 			}
+			$vehicle["videos"] = $videos;
 		}
 		return $vehicle;
 	}
@@ -527,26 +542,33 @@ class Client
 		$vehicle = array();
 		if (!$this->hasError)
 		{
-			foreach($this->data->vehicle[0] as $key=>$val) {
+			foreach($this->data->vehicle[0] as $key=>$val)
 				$vehicle[(string)$key] = (string)$val;
-			}
-	
-			foreach($this->data->vehicle[0]->dealer[0] as $key=>$val) {
+			
+			foreach($this->data->vehicle[0]->dealer[0] as $key=>$val)
 				$vehicle["dealer"][(string)$key] = (string)$val;
-			}
-	
-			foreach($this->data->vehicle[0]->carfax[0] as $key=>$val) {
+			
+			foreach($this->data->vehicle[0]->carfax[0] as $key=>$val)
 				$vehicle["carfax"][(string)$key] = (string)$val;
-			}
-	
+			
 			$count = 0;
-			foreach($this->data->vehicle[0]->photos[0] as $key=>$val) {
+			foreach($this->data->vehicle[0]->photos[0] as $key=>$val)
 				$vehicle["photos"][$count++] = (string)$val;
-			}
+			
 			$count = 0;
-			foreach($this->data->vehicle[0]->thumbs[0] as $key=>$val) {
+			foreach($this->data->vehicle[0]->thumbs[0] as $key=>$val)
 				$vehicle["thumbs"][$count++] = (string)$val;
+			
+			$videos = array();
+			foreach($this->data->vehicle[0]->videos[0]->video as $video) {
+				$vid = array();
+				foreach($video as $key=>$val) {
+					$key = (string)$key;
+					$vid[$key] = (string)$val;
+				}
+				$videos[] = $vid;
 			}
+			$vehicle["videos"] = $videos;
 		}
 		return $vehicle;
 	}
@@ -583,26 +605,34 @@ class Client
 			foreach($this->data->vehicles[0]->vehicle as $veh) {
 				$vehicle = array();
 				$vehicle["photos"] = array();
-				$vehicle["thumbs"] = array();
 				$vehicle["dealer"] = array();
+				$vehicle["thumbs"] = array();
 				foreach($veh as $key=>$val) {
 					$key = (string)$key;
-					if($key != "dealer" && $key != "photos") {
+					if($key != "dealer" && $key != "photos" && $key != "videos" && $key != "thumbs") {
 						$vehicle[$key] = (string)$val;
 					}
 				}
-				foreach($veh->photos[0] as $key=>$val) {
+				foreach($veh->photos[0] as $key=>$val)
 					$vehicle["photos"][] = (string)$val;
-				}
-		
-				foreach($veh->dealer[0] as $key=>$val) {
-					$vehicle["dealer"][(string)$key] = (string)$val;
-				}
 
-				foreach($veh->thumbs[0] as $key=>$val) {
-					$vehicle["thumbs"][] = (string)$val;
+				foreach($veh->dealer[0] as $key=>$val)
+					$vehicle["dealer"][(string)$key] = (string)$val;
+
+				foreach($veh->thumbs[0] as $key=>$val)
+					$vehicle["thumbs"][(string)$key] = (string)$val;
+
+				$videos = array();
+				foreach($veh->videos[0]->video as $video) {
+					$vid = array();
+					foreach($video as $key=>$val) {
+						$key = (string)$key;
+						$vid[$key] = (string)$val;
+					}
+					$videos[] = $vid;
 				}
-		
+				$vehicle["videos"] = $videos;
+
 				$vehicles["list"][] = $vehicle;
 			}
 			$vehicles["total_count"] = (string)$this->data->meta[0]->total;
@@ -806,7 +836,6 @@ class Client
 			'image' => '@' . $image,
 			'xml' => $xml
 		);
-		error_reporting(E_ALL);
 		$this->handleResponse($this->sendRequest($post));
 
 		return !$this->hasError;
@@ -838,7 +867,284 @@ class Client
 	}
 
 	/**************************************************************************
-	 * Private functions.
+	 *
+	* Function:
+	*   ContactAdd()
+	* Description:
+	*   Adds a new contact (if not exists) to the contact manager and sends a message
+	* Input:
+	* 	veh_id: vehicle id
+	*   first_name
+	*   last_name
+	*   email
+	*   phone_number
+	*   message
+	*   source
+	*
+	*   address
+	*   city
+	*   state
+	*   zip_code
+	*   ip_address
+	* Output:
+	*   boolean; true if successful, false if not
+	*/
+	public function ContactAdd($params)
+	{
+		$xml = '<?xml version="1.0" encoding="utf-8"?>';
+		$xml .= '<request method="contact.add">';
+		foreach($params as $key=>$val) {
+			$xml .= "<$key>" . htmlspecialchars(utf8_encode($val)) . "</$key>";
+		}
+		$xml .= '</request>';
+
+		$this->handleResponse($this->sendRequest($xml));
+	
+		return !$this->hasError;
+	}
+
+	/**************************************************************************
+	*
+	* Function:
+	*   ContactList()
+	* Description:
+	*   Return a list of all contacts belonging to this dealer
+	* Input:
+	*   Array of parameters:
+	*       page: page number to return
+	*       page_size: number of dealers per page to return
+	*       sort_by: sort data by: CreatedOn, LastName
+	*       sort_type: sort type: ASC, DESC
+	* Output:
+	*   Array:
+	*       list: list of contact parameters (see ContactView() function)
+	*       total_count: total number of contact found given search parameters
+	*/
+	public function ContactList($params)
+	{
+		$xml = '<?xml version="1.0" encoding="utf-8"?>';
+		$xml .= '<request method="contact.list">';
+		foreach($params as $key=>$val) {
+			$xml .= "<$key>" . htmlspecialchars(utf8_encode($val)) . "</$key>";
+		}
+		$xml .= '</request>';
+	
+		$this->handleResponse($this->sendRequest($xml));
+
+		$contacts = array(
+			'list' => array(),
+			'total_count' => 0
+		);
+
+		if (!$this->hasError)
+		{
+			foreach ($this->data->contacts[0]->contact as $_contact) {
+				$contact = array();
+				foreach ($_contact as $key=>$val)
+					$contact[(string)$key] = (string)$val;
+
+				$contacts["list"][] = $contact;
+			}
+	
+			$contacts["total_count"] = (string)$this->data->meta[0]->total;
+		}
+
+		return $contacts;
+	}
+
+	/**************************************************************************
+	*
+	* Function:
+	*   ContactView()
+	* Description:
+	*   Shows details for the given contact
+	* Input:
+	* 	contact_id: contact id
+	* Output:
+	*   Array of contact:
+	*   	id
+	*   	first_name
+	*   	last_name
+	*   	street
+	*   	city
+	*   	state
+	*   	zip
+	*   	day_phone
+	*   	evening_phone
+	*   	mobile_phone
+	*   	work_phone
+	*   	fax_number
+	*   	email
+	*   	created_on
+	*/
+	public function ContactView($contactId)
+	{
+		$xml = '<?xml version="1.0" encoding="utf-8"?>';
+		$xml .= '<request method="contact.view">';
+		$xml .= "<contact_id>" . $contactId . "</contact_id>";
+		$xml .= '</request>';
+
+		$this->handleResponse($this->sendRequest($xml));
+
+		$contact = array();
+		if (!$this->hasError)
+		{
+			foreach ($this->data->contact[0] as $key=>$val)
+				$contact[(string)$key] = (string)$val;
+		}
+
+		return $contact;
+	}
+
+	/**************************************************************************
+	*
+	* Function:
+	*   ContactDelete()
+	* Description:
+	*   Delete the given contact
+	* Input:
+	* 	contact_id: contact id
+	* Output:
+	*   boolean; true if successful, false if not
+	*/
+	public function ContactDelete($contactId)
+	{
+		$xml = "<?xml version='1.0' encoding='utf-8'?>";
+		$xml .= "<request method='contact.delete'>";
+		$xml .= "<contact_id>$contactId</contact_id>";
+		$xml .= "</request>";
+
+		$this->handleResponse($this->sendRequest($xml));
+	
+		return !$this->hasError;
+	}
+
+	/**************************************************************************
+	*
+	* Function:
+	*   ContactListMessages()
+	* Description:
+	*   Return a list of all messages belonging to this dealer
+	* Input:
+	*   Array of parameters:
+	*       page: page number to return
+	*       page_size: number of dealers per page to return
+	*       sort_by: sort data by: CreatedOn, From
+	*       sort_type: sort type: ASC, DESC
+	* Output:
+	*   Array:
+	*       list: list of message parameters (see ContactViewMessage() function)
+	*       total_count: total number of messages found given search parameters
+	*/
+	public function ContactListMessages($params)
+	{
+		$xml = '<?xml version="1.0" encoding="utf-8"?>';
+		$xml .= '<request method="contact.list_messages">';
+		foreach($params as $key=>$val) {
+			$xml .= "<$key>" . htmlspecialchars(utf8_encode($val)) . "</$key>";
+		}
+		$xml .= '</request>';
+	
+		$this->handleResponse($this->sendRequest($xml));
+	
+		$messages = array(
+			'list' => array(),
+			'total_count' => 0
+		);
+	
+		if (!$this->hasError)
+		{
+			foreach ($this->data->messages[0]->message as $_message) {
+				$message = array();
+				foreach ($_message as $key=>$val)
+					$message[(string)$key] = (string)$val;
+	
+				$messages["list"][] = $message;
+			}
+	
+			$messages["total_count"] = (string)$this->data->meta[0]->total;
+		}
+	
+		return $messages;
+	}
+
+	/**************************************************************************
+	*
+	* Function:
+	*   ContactViewMessage()
+	* Description:
+	*   View message thread for the given message
+	* Input:
+	* 	msg_id: message id
+	* Output:
+	*   Array:
+	*       list: list of message parameters
+	*       total_count: total number of messages found given search parameters
+	*   Array of message:
+	*   	id
+	*   	subject
+	*   	from
+	*   	first_name
+	*   	last_name
+	*   	message
+	*   	source
+	*   	created_on
+	*/
+	public function ContactViewMessage($messageId)
+	{
+		$xml = '<?xml version="1.0" encoding="utf-8"?>';
+		$xml .= '<request method="contact.view_message">';
+		$xml .= "<msg_id>" . $messageId . "</msg_id>";
+		$xml .= '</request>';
+
+		$this->handleResponse($this->sendRequest($xml));
+
+		$messages = array(
+			'list' => array(),
+			'total_count' => 0
+		);
+
+		if (!$this->hasError)
+		{
+			foreach ($this->data->messages[0]->message as $_message) {
+				$message = array();
+				foreach ($_message as $key=>$val)
+					$message[(string)$key] = (string)$val;
+	
+				$messages["list"][] = $message;
+			}
+	
+			$messages["total_count"] = count($messages["list"]);
+		}
+
+		return $messages;
+	}
+
+	/**************************************************************************
+	*
+	* Function:
+	*   ContactDelete()
+	* Description:
+	*   Delete the given message
+	* Input:
+	* 	msg_id: message id
+	* Output:
+	*   boolean; true if successful, false if not
+	*/
+	public function ContactDeleteMessage($messageId)
+	{
+		$xml = "<?xml version='1.0' encoding='utf-8'?>";
+		$xml .= "<request method='contact.delete_message'>";
+		$xml .= "<msg_id>$messageId</msg_id>";
+		$xml .= "</request>";
+
+		$this->handleResponse($this->sendRequest($xml));
+	
+		return !$this->hasError;
+	}
+
+	/**************************************************************************
+	* Private functions.
 	*/
 
 	private function handleResponse($resp) {
