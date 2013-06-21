@@ -10,6 +10,9 @@ include '../config.php';
 
 <?php 
 if (isset($_REQUEST['submit'])) {
+	// first parameter is the API key
+	// second parameter indicates if it'll run in production
+	// or development mode
 	$client = new Client($apiKey, $production);
 
 	$rs = $client->ContactViewMessage($_REQUEST['msg_id']);

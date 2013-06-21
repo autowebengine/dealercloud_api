@@ -33,7 +33,10 @@ include '../config.php';
 </form>
 
 <?php 
-if (isset($_REQUEST['submit'])) {	
+if (isset($_REQUEST['submit'])) {
+	// first parameter is the API key
+	// second parameter indicates if it'll run in production
+	// or development mode
 	$client = new Client($apiKey, $production);
 
 	$rs = $client->GetVehicles($_REQUEST);

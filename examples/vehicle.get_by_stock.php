@@ -10,8 +10,17 @@ include '../config.php';
 
 <?php 
 if (isset($_REQUEST['submit'])) {	
+	// first parameter is the API key
+	// second parameter indicates if it'll run in production 
+	// or development mode
 	$client = new Client($apiKey, $production);
 
+	// first parameter indicates the stock number for the vehicle in
+	// inventory
+	// second parameter, used on broker accounts, indicates the dealer id
+	// where the vehicle can be found
+	// third parameter indicates if it should track the view
+	// in the statistics
 	$vehicle = $client->GetVehicleByStock($_REQUEST['stock'], false, true);
 
 	print "<h1>Response</h1>";

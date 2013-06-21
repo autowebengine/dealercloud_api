@@ -9,9 +9,14 @@ include '../config.php';
 </form>
 
 <?php 
-if (isset($_REQUEST['submit'])) {	
+if (isset($_REQUEST['submit'])) {
+	// first parameter is the API key
+	// second parameter indicates if it'll run in production 
+	// or development mode
 	$client = new Client($apiKey, $production);
 
+	// second parameter indicates if it should track the view
+	// in the statistics
 	$vehicle = $client->GetVehicle($_REQUEST['id'], true);
 
 	print "<h1>Response</h1>";
