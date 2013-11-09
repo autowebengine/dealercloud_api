@@ -1144,6 +1144,262 @@ class Client
 	}
 
 	/**************************************************************************
+	*
+	* Function:
+	*   ContentGet()
+	* Description:
+	*   Gets content for the given section
+	* Input:
+	* 	section
+	*
+	* Output:
+	*   Array of content:
+	*      title
+	*      subtitle
+	*      content
+	*/
+	public function ContentGet($section)
+	{
+		$xml = '<?xml version="1.0" encoding="utf-8"?>';
+		$xml .= '<request method="content.get">';
+		$xml .= "<section>" . htmlspecialchars(utf8_encode($section)) . "</section>";
+		$xml .= '</request>';
+	
+		$this->handleResponse($this->sendRequest($xml));
+	
+		$content = array();
+		if (!$this->hasError)
+		{
+			foreach ($this->data->content[0] as $key=>$val)
+				$content[(string)$key] = (string)$val;
+		}
+	
+		return $content;
+	}
+	
+	/**************************************************************************
+	*
+	* Function:
+	*   ContentAdd()
+	* Description:
+	*   Adds new content
+	* Input:
+	* 	section
+	*   title
+	*   subtitle
+	*   content
+	*
+	* Output:
+	*   boolean; true if successful, false if not
+	*/
+	public function ContentAdd($section, $content, $title = '', $subtitle = '')
+	{
+		$xml = '<?xml version="1.0" encoding="utf-8"?>';
+		$xml .= '<request method="content.add">';
+		$xml .= "<section>" . htmlspecialchars(utf8_encode($section)) . "</section>";
+		$xml .= "<title>" . htmlspecialchars(utf8_encode($title)) . "</title>";
+		$xml .= "<subtitle>" . htmlspecialchars(utf8_encode($section)) . "</subtitle>";
+		$xml .= "<content>" . htmlspecialchars(utf8_encode($content)) . "</content>";
+		$xml .= '</request>';
+	
+		$this->handleResponse($this->sendRequest($xml));
+	
+		return !$this->hasError;
+	}
+	
+	/**************************************************************************
+	*
+	* Function:
+	*   ContentUpdate()
+	* Description:
+	*   Update content
+	* Input:
+	* 	section
+	*   title
+	*   subtitle
+	*   content
+	*
+	* Output:
+	*   boolean; true if successful, false if not
+	*/
+	public function ContentUpdate($section, $content, $title = false, $subtitle = false)
+	{
+		$xml = '<?xml version="1.0" encoding="utf-8"?>';
+		$xml .= '<request method="content.update">';
+		$xml .= "<section>" . htmlspecialchars(utf8_encode($section)) . "</section>";
+		if ($title !== false)
+			$xml .= "<title>" . htmlspecialchars(utf8_encode($title)) . "</title>";
+		if ($subtitle !== false)
+			$xml .= "<subtitle>" . htmlspecialchars(utf8_encode($subtitle)) . "</subtitle>";
+		$xml .= "<content>" . htmlspecialchars(utf8_encode($content)) . "</content>";
+		$xml .= '</request>';
+	
+		$this->handleResponse($this->sendRequest($xml));
+	
+		return !$this->hasError;
+	}
+	
+	/**************************************************************************
+	*
+	* Function:
+	*   ContentDelete()
+	* Description:
+	*   Delete content for the given section
+	* Input:
+	* 	section
+	*
+	* Output:
+	*   boolean; true if successful, false if not
+	*/
+	public function ContentDelete($section)
+	{
+		$xml = '<?xml version="1.0" encoding="utf-8"?>';
+		$xml .= '<request method="content.delete">';
+		$xml .= "<section>" . htmlspecialchars(utf8_encode($section)) . "</section>";
+		$xml .= '</request>';
+	
+		$this->handleResponse($this->sendRequest($xml));
+	
+		return !$this->hasError;
+	}
+	
+	/**************************************************************************
+	*
+	* Function:
+	*   GetContentImages()
+	* Description:
+	*   Get all the content images
+	*
+	* Output:
+	*   Array:
+	*       list: list of images
+	*       total_count: total number of images found
+	*   Array of image:
+	*   	seq
+	*   	title
+	*   	description
+	*   	url
+	*/
+	public function GetContentImages()
+	{
+		$xml = '<?xml version="1.0" encoding="utf-8"?>';
+		$xml .= '<request method="content.get_images">';
+		$xml .= '</request>';
+	
+		$this->handleResponse($this->sendRequest($xml));
+	
+		$images = array(
+			'list' => array(),
+			'total_count' => 0
+		);
+	
+		if (!$this->hasError)
+		{
+			foreach ($this->data->images[0]->image as $_image) {
+				$image = array();
+				foreach ($_image as $key=>$val)
+					$image[(string)$key] = (string)$val;
+	
+				$images["list"][] = $image;
+			}
+	
+			$images["total_count"] = count($images["list"]);
+		}
+	
+		return $images;
+	}
+	
+	/**************************************************************************
+	*
+	* Function:
+	*   AddContentImage()
+	* Description:
+	*   Add a new content image
+	* Input:
+	*   image: full path of image to add
+	*   seq: sequence number (image position)
+	*   title
+	*   description
+	*
+	* Output:
+	*   boolean; true if successful, false if not
+	*/
+	public function AddContentImage($image, $seq, $title, $description)
+	{
+		$xml = "<?xml version='1.0' encoding='utf-8'?>";
+		$xml .= "<request method='content.add_image'>";
+		$xml .= "<seq>$seq</seq>";
+		$xml .= "<title>" . htmlspecialchars(utf8_encode($title)) . "</title>";
+		$xml .= "<description>" . htmlspecialchars(utf8_encode($description)) . "</description>";
+		$xml .= "</request>";
+		$post = array(
+			'image' => '@' . $image,
+			'xml' => $xml
+		);
+		$this->handleResponse($this->sendRequest($post));
+	
+		return !$this->hasError;
+	}
+
+	/**************************************************************************
+	*
+	* Function:
+	*   UpdateContentImage()
+	* Description:
+	*   Update a content image
+	* Input:
+	*   image: full path of image to add
+	*   seq: sequence number (image position)
+	*   title
+	*   description
+	*   
+	* Output:
+	*   boolean; true if successful, false if not
+	*/
+	public function UpdateContentImage($image, $seq, $title = false, $description = false)
+	{
+		$xml = "<?xml version='1.0' encoding='utf-8'?>";
+		$xml .= "<request method='content.update_image'>";
+		$xml .= "<seq>$seq</seq>";
+		if ($title !== false)
+			$xml .= "<title>" . htmlspecialchars(utf8_encode($title)) . "</title>";
+		if ($description !== false)
+			$xml .= "<description>" . htmlspecialchars(utf8_encode($description)) . "</description>";
+		$xml .= "</request>";
+		$post = array(
+			'image' => '@' . $image,
+			'xml' => $xml
+		);
+		$this->handleResponse($this->sendRequest($post));
+
+		return !$this->hasError;
+	}
+
+	/**************************************************************************
+	*
+	* Function:
+	*   DeleteContentImage()
+	* Description:
+	*   Delete a content image
+	* Input:
+	*   seq: sequence number (image position)
+	*
+	* Output:
+	*   boolean; true if successful, false if not
+	*/
+	public function DeleteContentImage($seq)
+	{
+		$xml = "<?xml version='1.0' encoding='utf-8'?>";
+		$xml .= "<request method='content.delete_image'>";
+		$xml .= "<seq>$seq</seq>";
+		$xml .= "</request>";
+	
+		$this->handleResponse($this->sendRequest($xml));
+	
+		return !$this->hasError;
+	}
+
+	/**************************************************************************
 	* Private functions.
 	*/
 
