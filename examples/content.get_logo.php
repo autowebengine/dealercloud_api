@@ -1,0 +1,31 @@
+<?php 
+include '../config.php';
+?>
+<html><body>
+<h2>content.get_logo</h2>
+<form method="post">
+<p><input type="submit" name="submit" value="Execute!" /></p>
+</form>
+
+<?php 
+if (isset($_REQUEST['submit'])) {
+	// first parameter is the API key
+	// second parameter indicates if it'll run in production
+	// or development mode
+	$client = new Client($apiKey, $production);
+
+	$content = $client->ContentGetLogo();
+
+	print "<h1>Response</h1>";
+	print "<pre>";
+	if ($client->hasError)
+		print "Error:" . $client->error;
+	else {
+		print "Logo details\n";
+		print "Url:{$content['url']}\n";
+		print_r($content);
+	}
+	print "</pre>";
+}
+?>
+</body></html>

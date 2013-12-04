@@ -1266,6 +1266,63 @@ class Client
 	/**************************************************************************
 	*
 	* Function:
+	*   AddLogo()
+	* Description:
+	*   Adds a logo
+	* Input:
+	*   image: full path of image to add
+	*
+	* Output:
+	*   boolean; true if successful, false if not
+	*/
+	public function AddLogo($image)
+	{
+		$xml = "<?xml version='1.0' encoding='utf-8'?>";
+		$xml .= "<request method='content.add_logo'>";
+		$xml .= "</request>";
+		$post = array(
+			'image' => '@' . $image,
+			'xml' => $xml
+		);
+		$this->handleResponse($this->sendRequest($post));
+	
+		return !$this->hasError;
+	}
+
+	/**************************************************************************
+	 *
+	* Function:
+	*   ContentGetLogo()
+	* Description:
+	*   Gets logo
+	* Input:
+	* 	None
+	*
+	* Output:
+	*   Array of logo:
+	*      url
+	*/
+	public function ContentGetLogo()
+	{
+		$xml = '<?xml version="1.0" encoding="utf-8"?>';
+		$xml .= '<request method="content.get_logo">';
+		$xml .= '</request>';
+	
+		$this->handleResponse($this->sendRequest($xml));
+	
+		$logo = array();
+		if (!$this->hasError)
+		{
+			foreach ($this->data->logo[0] as $key=>$val)
+				$logo[(string)$key] = (string)$val;
+		}
+	
+		return $logo;
+	}
+
+	/**************************************************************************
+	*
+	* Function:
 	*   GetContentImages()
 	* Description:
 	*   Get all the content images
