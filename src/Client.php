@@ -1073,9 +1073,9 @@ class Client
 	* Function:
 	*   ContactViewMessage()
 	* Description:
-	*   View message thread for the given message
+	*   View message thread for the given thread
 	* Input:
-	* 	msg_id: message id
+	* 	thread_id: thread id
 	* Output:
 	*   Array:
 	*       list: list of message parameters
@@ -1087,14 +1087,15 @@ class Client
 	*   	first_name
 	*   	last_name
 	*   	message
+	*   	thread_id
 	*   	source
 	*   	created_on
 	*/
-	public function ContactViewMessage($messageId)
+	public function ContactViewMessage($threadId)
 	{
 		$xml = '<?xml version="1.0" encoding="utf-8"?>';
 		$xml .= '<request method="contact.view_message">';
-		$xml .= "<msg_id>" . $messageId . "</msg_id>";
+		$xml .= "<thread_id>" . $threadId . "</thread_id>";
 		$xml .= '</request>';
 
 		$this->handleResponse($this->sendRequest($xml));

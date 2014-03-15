@@ -4,7 +4,7 @@ include '../config.php';
 <html><body>
 <h2>contact.view_message</h2>
 <form method="post">
-<p>Message ID: <input type="text" name="msg_id" /></p>
+<p>Message ID: <input type="text" name="thread_id" /></p>
 <p><input type="submit" name="submit" value="Execute!" /></p>
 </form>
 
@@ -15,7 +15,7 @@ if (isset($_REQUEST['submit'])) {
 	// or development mode
 	$client = new Client($apiKey, $production);
 
-	$rs = $client->ContactViewMessage($_REQUEST['msg_id']);
+	$rs = $client->ContactViewMessage($_REQUEST['thread_id']);
 
 	print "<h1>Response</h1>";
 	print "<pre>";
